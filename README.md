@@ -10,6 +10,8 @@ Using the GEP simulator is relatively simple. However, there are a few things yo
 - **The GEP simulator utilizes internal Overwolf APIs, to give you greater testing capabilities. However, the simulator should only be used during the *active development* of your app!**
 - In order for the simulator to work, you must not change any of the `meta' fields in its manifest, apart from 'version'.
 
+- **YOU NEED TO USE NODE VERSION 16.19.0 IN ORDER TO BUILD THIS.
+
 ## Available Scripts
 
 Install all the dependent npm packages locally to the current directory:
