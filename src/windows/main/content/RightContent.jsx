@@ -17,6 +17,8 @@ class RightContent extends Component {
     this.onDataChanged = this.onDataChanged.bind(this);
     this.onFireClicked = this.onFireClicked.bind(this);
     this.onCopyClicked = this.onCopyClicked.bind(this);
+    this.triggerEvent2 = this.triggerEvent2.bind(this);
+    this.updateInfo2 = this.updateInfo2.bind(this);
 
     // Methods
     this.getEventsOptions = this.getEventsOptions.bind(this);
@@ -147,10 +149,31 @@ class RightContent extends Component {
     this.displayMessage('Triggered!');
   }
 
+  triggerEvent2() {
+    const feature = document.getElementById('feature2').value;
+    const event = document.getElementById('event2').value;
+    let data = document.getElementById('data2').value;
+   
+    if (!feature || !event) {
+       this.displayMessage('Please fill in Feature and Event fields.');
+       return;
+    }
+   
+    const adjustedEvent = this.addIndex(event);
+   
+    data = data === 'null' ? null : data.replace(/\\"/g, '"');
+   
+    console.log(`[GAME EVENTS SIMULATOR] TRIGGERING EVENT: feature: ${feature}, event: ${adjustedEvent}, data: ${data}`);
+    overwolf.games.events.provider.triggerEvent(feature, adjustedEvent, data);
+    this.displayMessage('Triggered!');
+   }
+
   updateInfo() {
     if (!this.state.selectedEvent) return;
     const feature = this.state.selectedFeature;
     let { category, key } = JSON.parse(this.state.selectedEvent);
+    console.log(category);
+    console.log(key);
     let value = `${this.state.data}`;
     key = this.addIndex(key);
     value = value === 'null' ? null : value.replace(/\\"/g, '"');
@@ -158,6 +181,30 @@ class RightContent extends Component {
     overwolf.games.events.provider.updateInfo({feature, category, key, value});
     this.displayMessage('Triggered!');
   }
+
+  updateInfo2() {
+    try {
+      const feature = document.getElementById('feature3').value;
+      let category = document.getElementById('feature3').value;
+      let key = document.getElementById('category3').value;
+      let value = document.getElementById('value3').value;
+     
+      if (!feature || !category || !key) {
+         this.displayMessage('Please fill in Feature, Category, and Key fields.');
+         return;
+      }
+    
+      value = value === 'null' ? null : value.replace(/\\"/g, '"');
+     
+      console.log(`[GAME EVENTS SIMULATOR] UPDATING INFO: feature: ${feature}, category: ${category}, key: ${key}, value: ${value}`);
+      overwolf.games.events.provider.updateInfo({feature, category, key, value});
+      this.displayMessage('Updated!');
+    } catch (error) {
+      console.error('Error in updateInfo2:', error);
+      this.displayMessage('An error occurred. Please check the console for details.');
+    }
+  }
+   
 
   createPreview() {
     let {
@@ -341,7 +388,45 @@ class RightContent extends Component {
             </div>
           </div>
         </div>
+
+        <div style={{flex: 5, paddingTop: "20px", marginTop: "75px", borderTop: "solid 1px #444444"}}></div>
+
+        <div style={{flex: 5, paddingTop: "20px"}}>
+        <div className="label">
+          <label>Feature Info:</label>
+          <input id="feature3" type="text" placeholder="Enter feature info" />
+        </div>
+        <div className="label">
+          <label>Category Info:</label>
+          <input id="category3" type="text" placeholder="Enter category info" />
+        </div>
+        <div className="label">
+          <label>Value Info:</label>
+          <input id="value3" type="text" placeholder="Enter value info" />
+        </div>
+        <button className="button" onClick={this.updateInfo2} style={{float: "right"}}>
+              Custom Info
+        </button>
       </div>
+      
+      <div style={{flex: 5, paddingTop: "20px"}}>
+        <div className="label">
+          <label>Feature Event:</label>
+          <input id="feature2" type="text" placeholder="Enter feature Event" />
+        </div>
+        <div className="label">
+          <label>Event Event:</label>
+          <input id="event2" type="text" placeholder="Enter event Event" />
+        </div>
+        <div className="label">
+          <label>Data Event:</label>
+          <input id="data2" type="text" placeholder="Enter data Event" />
+        </div>
+        <button className="button" onClick={this.triggerEvent2} style={{float: "right"}}>
+              Custom Event
+        </button>
+      </div>
+    </div>
     )
   }
 }
