@@ -6,6 +6,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 If you notice any bugs with the custom events feature let me know, if there are any bugs with the original event selector make an issue on the original repository.
 
+![image](https://github.com/PangwenE/gep-sim-with-custom-events/assets/46404863/f033933e-7ca1-4f21-9fda-8cfdd6576cd5)
+
+
 # Important Notice
 
 Using the GEP simulator is relatively simple. However, there are a few things you should keep in mind before proceeding:
